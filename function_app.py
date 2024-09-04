@@ -1,17 +1,14 @@
 import azure.functions as func
 import logging
 import json
+from azure.data.tables import TableServiceClient
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
-movies = []
-movie1 = {"Title":"The Dark Knight", "Release Year":"2008", "Genre": "Action","coverURL":"https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg"}
-movie2 = {"Title":"Bogus Name", "Release Year": "2012", "Genre":"Retard", "coverURL":"https://example.org"}
-movies.append(movie1)
-movies.append(movie2)
-
+#Get Movies
 @app.route(route="GetMovies")
-def GetMovies(req: func.HttpRequest) -> func.HttpResponse:
+@app.table_input(arg_name="movies", table_name="Movies", connection="AzureWebJobsStorage")
+def GetMovies(req: func.HttpRequest, movies) -> func.HttpResponse:
     logging.info('Python GetMovies trigger function processed a request.')
 
     movies_json = json.dumps(movies)
@@ -20,45 +17,46 @@ def GetMovies(req: func.HttpRequest) -> func.HttpResponse:
         
     )
 
+#Get Movies by Year
+connection_string = "UseDevelopmentStorage=true"
+connection = TableServiceClient.from_connection_string(conn_str=connection_string)
 @app.route(route="GetMoviesByYear")
-def GetMoviesByYear(req: func.HttpRequest) -> func.HttpResponse: 
+@app.table_input(arg_name="movies", table_name="Movies",connection="AzureWebJobsStorage")
+def GetMoviesByYear(req: func.HttpRequest, movies) -> func.HttpResponse: 
     logging.info('Running GetMoviesByYear')
-
     year = req.params.get('year')
-    filtered_movies = [ release_year for release_year in movies if release_year["Release Year"] == year]
-    filtered_movies_json = json.dumps(filtered_movies)
-    if year: 
+
+
+    if not year: 
         return func.HttpResponse(
-            filtered_movies_json
+            "Please enter a year", status_code=400
         )
     else:
+        filter_string = f"ReleaseYear eq '{year}'"
+        table_client=connection.get_table_client("Movies")
+        results=table_client.query_entities(query_filter=filter_string)
+        results_list = [dict(result) for result in results]
+        results_json = json.dumps(results_list)
         return func.HttpResponse(
-            "Please enter a year"
+            results_json
         )
     
+    #Get Movies by Genre
+@app.route(route="GetMoviesByGenre")
+@app.table_input(arg_name="genre", table_name="Movies", connection="AzureWebJobsStorage")
+def GetMoviesByGenre(req: func.HttpRequest, genre) -> func.HttpResponse:
+    logging.info('Running GetMoviesbyGenre')
+    genre = req.params.get('genre')
 
-
-
-
-
-    
-
-'''def GetMovies(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
-
-    name = req.params.get('name')
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
-
-    if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
+    if not genre:
+        return func.HttpResponse("Please enter a genre", status_code=400)
     else:
-        return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-             status_code=200
-        )'''
+        genre_filter_string = f"Genre eq '{genre}'"
+        table_client=connection.get_table_client("Movies")
+        results=table_client.query_entities(query_filter=genre_filter_string)
+        """for result in results:
+            logging.info(f"Query results: {result}")"""
+        results_list= [dict(result) for result in results]
+        results_json = json.dumps(results_list)
+        return func.HttpResponse(results_json)
+   
