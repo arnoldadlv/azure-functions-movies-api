@@ -16,17 +16,17 @@ def GetMovies(req: func.HttpRequest, movies) -> func.HttpResponse:
         movies_json 
         
     )
-
-#Get Movies by Year
+#Sets up TableServiceClient
 connection_string = "UseDevelopmentStorage=true"
 connection = TableServiceClient.from_connection_string(conn_str=connection_string)
+#Get Movies by Year
 @app.route(route="GetMoviesByYear")
 @app.table_input(arg_name="movies", table_name="Movies",connection="AzureWebJobsStorage")
 def GetMoviesByYear(req: func.HttpRequest, movies) -> func.HttpResponse: 
     logging.info('Running GetMoviesByYear')
     year = req.params.get('year')
 
-
+    #Checks if year parameter exists, if not, returns a status code 400.
     if not year: 
         return func.HttpResponse(
             "Please enter a year", status_code=400
@@ -47,7 +47,7 @@ def GetMoviesByYear(req: func.HttpRequest, movies) -> func.HttpResponse:
 def GetMoviesByGenre(req: func.HttpRequest, genre) -> func.HttpResponse:
     logging.info('Running GetMoviesbyGenre')
     genre = req.params.get('genre')
-
+    #Checks if genre parameter exists, if not, returns a status code 400
     if not genre:
         return func.HttpResponse("Please enter a genre", status_code=400)
     else:
