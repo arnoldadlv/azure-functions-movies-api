@@ -1,8 +1,12 @@
 import azure.functions as func
 import logging
 import json
+import os
 from azure.data.tables import TableServiceClient
 from azure.core.credentials import AzureNamedKeyCredential
+account_name = os.getenv("AccountName")
+account_key =  os.getenv("AccountKey")
+azurewebjobs = os.getenv("AzureWebJobsStorage")
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
@@ -12,7 +16,6 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 @app.table_input(arg_name="movies", table_name="Movies", connection="AzureWebJobsStorage")
 def GetMovies(req: func.HttpRequest, movies) -> func.HttpResponse:
     logging.info('Python GetMovies trigger function processed a request.')
-
     movies_json = json.dumps(movies)
     return func.HttpResponse(
         movies_json 
@@ -64,9 +67,7 @@ def CreateMovie(req: func.HttpRequest, movie) -> func.HttpResponse:
     if not movie:
         return func.HttpResponse("Please enter a movie", status_code=400)
     else:
-        account_name = "dlvmoviesfunctionapi"
-        endpoint = "https://dlvmoviesfunctionapi.table.core.windows.net/Movies"
-        account_key ="F2Nblgu9nIVh8kYMJTxcZEmXZG8VIZ7P0O6YDGrTJ/s/ppF2/cM2nnnx+fE3Ug3jT/UVvLdNPo6a+AStEm/2EA=="
+        endpoint = f"https://{account_name}.table.core.windows.net/Movies"
         credential = AzureNamedKeyCredential(name=account_name, key=account_key)
         service = TableServiceClient(endpoint=endpoint,credential=credential)
         moviestable = service.get_table_client("Movies")
