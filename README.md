@@ -15,5 +15,16 @@ Features:
 Example: 
 ```
 curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMovies
+```
+2. GetMoviesByYear
+- URL https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByYear?year=<year>
 
+Example:
+```
+curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByYear?year=2008
+```
+
+Example Response:
+```
+[{"PartitionKey": "2008", "RowKey": "Inception", "Title": "Inception", "Genre": "Thriller", "posterURL": "inception.com/image.jpg", "ReleaseYear": "2008"}, {"PartitionKey": "2008", "RowKey": "The Dark Knight", "ReleaseYear": "2008", "Title": "The Dark Knight", "Genre": "Action", "posterURL": "https://example.org/example.jpeg"}]
 ```
