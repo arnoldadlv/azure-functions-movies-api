@@ -30,3 +30,19 @@ Example:
 ```
 curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByGenre?genre=Action
 ```
+# 4. GetMoviesByYearWithTableClient
+- URL https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByYearWithTableClient?year={year}
+
+Example:
+```
+curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByYearWithTableClient?year=2008
+```
+# 5. GetMoviesByGenreWithAzureTableClient
+- URL https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByGenreWithAzureTableClient{genre}
+
+Example:
+```
+curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByGenreWithAzureTableClient?genre=Action
+```
+# 5. CreateMovie
+-URL https://dlvmoviesfunctionapi.azurewebsites.net/api/CreateMovie
