@@ -46,3 +46,15 @@ curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByGenreWithAzur
 ```
 # 5. CreateMovie
 -URL https://dlvmoviesfunctionapi.azurewebsites.net/api/CreateMovie
+Example:
+```
+curl --location 'https://dlvmoviesfunctionapi.azurewebsites.net/api/CreateMovie' \
+--header 'Content-Type: application/json' \
+--data '{
+  "Title": "The LEGO Batman Movie",
+  "Genre": "Comedy",
+  "ReleaseYear": "2017",
+  "posterURL":"https://www.imdb.com/title/tt4116284/mediaviewer/rm2772370432/?ref_=tt_ov_i"
+}
+'
+```
