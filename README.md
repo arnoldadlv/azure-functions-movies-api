@@ -10,6 +10,8 @@ Features:
 - JSON response for easy integration with other systems.
 
 # 1. GetMovies
+- Description: Retrieves all movies stored in the Azure Table
+- Method: GET
 - URL: https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMovies
 
 Example: 
@@ -17,6 +19,8 @@ Example:
 curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMovies
 ```
 # 2. GetMoviesByYear
+- Description: Retrieves movies released in a specific year
+- Method: GET
 - URL https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByYear?year={year}
 
 Example:
@@ -24,6 +28,8 @@ Example:
 curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByYear?year=2008
 ```
 # 3. GetMoviesByGenre
+- Description: Retrives movies of a specific genre
+- Method: GET
 - URL: https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByGenre?genre={genre}
 
 Example:
@@ -31,6 +37,8 @@ Example:
 curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByGenre?genre=Action
 ```
 # 4. GetMoviesByYearWithTableClient
+- Description: Retrives movies of a specific year using the Azure Table Client
+- Method: GET
 - URL https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByYearWithTableClient?year={year}
 
 Example:
@@ -38,14 +46,17 @@ Example:
 curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByYearWithTableClient?year=2008
 ```
 # 5. GetMoviesByGenreWithAzureTableClient
+- Description: Retrieves movies of a specified genre using the Azure Table Client
+- Method: GET
 - URL https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByGenreWithAzureTableClient{genre}
-
 Example:
 ```
 curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByGenreWithAzureTableClient?genre=Action
 ```
 # 5. CreateMovie
--URL https://dlvmoviesfunctionapi.azurewebsites.net/api/CreateMovie
+- Description: Adds a movie to the Azure Table
+- Method: POST
+- URL https://dlvmoviesfunctionapi.azurewebsites.net/api/CreateMovie
 Example:
 ```
 curl --location 'https://dlvmoviesfunctionapi.azurewebsites.net/api/CreateMovie' \
