@@ -13,4 +13,7 @@ Features:
 - URL: https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMovies
 
 Example: 
-```curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMovies```
+```
+curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMovies
+
+```
