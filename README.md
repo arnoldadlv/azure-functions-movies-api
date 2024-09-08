@@ -9,14 +9,14 @@ Features:
 - Add new movies to the Azure Table.
 - JSON response for easy integration with other systems.
 
-1. GetMovies
+# 1. GetMovies
 - URL: https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMovies
 
 Example: 
 ```
 curl https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMovies
 ```
-2. GetMoviesByYear
+# 2. GetMoviesByYear
 - URL https://dlvmoviesfunctionapi.azurewebsites.net/api/GetMoviesByYear?year=<year>
 
 Example:
